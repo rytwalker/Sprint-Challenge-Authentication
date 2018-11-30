@@ -32,16 +32,32 @@ class App extends Component {
     }
   };
 
+  logout = () => {
+    if (this.state.loggedIn) {
+      localStorage.removeItem('auth_token');
+      this.setState({ loggedIn: false });
+      this.props.history.push('/sign-in');
+    }
+  };
+
   componentDidMount() {
     this.authenticate();
+  }
+
+  componentDidUpdate(prevProps) {
+    const { pathname } = this.props.location;
+    if (pathname === '/' && pathname !== prevProps.location.pathname) {
+      this.authenticate();
+    }
   }
 
   render() {
     return (
       <div className="App">
-        <Navbar />
+        <Navbar logout={this.logout} loggedIn={this.state.loggedIn} />
         <h1>Dad's Gonna Joke</h1>
         <Route
+          exact
           path="/"
           render={routerProps => (
             <Jokes {...routerProps} jokes={this.state.jokes} />

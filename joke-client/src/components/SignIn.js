@@ -7,7 +7,7 @@ const initalUser = {
   password: ''
 };
 
-const url = process.env.REACT_APP_API_URL;
+// const url = process.env.REACT_APP_API_URL;
 
 class SignIn extends Component {
   state = { user: initalUser, message: '' };
@@ -23,7 +23,7 @@ class SignIn extends Component {
       .post(`http://localhost:3300/api/login`, this.state.user)
       .then(res => {
         localStorage.setItem('auth_token', res.data.token);
-        this.setState({ message: 'Sign in Success.', user: { ...initalUser } });
+        this.setState({ message: res.data.message, user: { ...initalUser } });
         alert(this.state.message);
         this.props.history.push('/');
       })
