@@ -35,6 +35,17 @@ async function register(req, res) {
       .json({ message: 'Please enter a valid username and password.' });
   }
 
+  try {
+    const usenameTaken = await db('users')
+      .where({ username: registrationData.username })
+      .first();
+    if (usenameTaken) {
+      return res.status(401).json({ message: 'That username is taken.' });
+    }
+  } catch (error) {
+    res.status(500).json({ error: 'There was an error accessing the db.' });
+  }
+
   const hash = bcrypt.hashSync(registrationData.password, 8);
   registrationData.password = hash;
 
