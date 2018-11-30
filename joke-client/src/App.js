@@ -26,18 +26,22 @@ class App extends Component {
         .then(res => {
           this.setState({ loggedIn: true, jokes: res.data });
         })
-        .catch(err => console.dir(err));
+        .catch(err => {
+          if (err.response.status === 401) {
+            return this.logout();
+          }
+        });
     } else {
       this.props.history.push('/sign-in');
     }
   };
 
   logout = () => {
-    if (this.state.loggedIn) {
-      localStorage.removeItem('auth_token');
-      this.setState({ loggedIn: false });
-      this.props.history.push('/sign-in');
-    }
+    // if (this.state.loggedIn) {
+    localStorage.removeItem('auth_token');
+    this.setState({ loggedIn: false });
+    this.props.history.push('/sign-in');
+    // }
   };
 
   componentDidMount() {
