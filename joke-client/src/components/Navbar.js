@@ -9,10 +9,10 @@ class Navbar extends Component {
         <NavLink exact to="/">
           Jokes
         </NavLink>
-        <NavLink exact to="/signup">
+        <NavLink exact to="/sign-up">
           Sign Up
         </NavLink>
-        <NavLink exact to="/signin">
+        <NavLink exact to="/sign-in">
           Sign In
         </NavLink>
         <button>Log out</button>
